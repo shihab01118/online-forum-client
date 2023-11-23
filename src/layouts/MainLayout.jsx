@@ -1,9 +1,17 @@
-const MainLayout = () => {
+import { Outlet } from "react-router-dom";
+import Navbar from "../components/shared/Navbar/Navbar";
 
-    return (
-        <div>
-            <p> Hello, I am MainLayout </p>
-        </div>
-    )
+const MainLayout = () => {
+  return (
+    <>
+      {/* TODO: navbar */}
+      <Navbar />
+
+      {/* Outlet */}
+      <div>
+        <Outlet />
+      </div>
+    </>
+  );
 };
 export default MainLayout;
