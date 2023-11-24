@@ -14,12 +14,15 @@ import { uploadImage } from "../../api/utils";
 import useAuth from "../../hooks/useAuth";
 import { getToken, saveUser } from "../../api/auth";
 import toast from "react-hot-toast";
+import { ImSpinner9 } from "react-icons/im";
+import { FcGoogle } from "react-icons/fc";
 
 const defaultTheme = createTheme();
 
 const Signup = () => {
   const navigate = useNavigate();
-  const { createUser, updateUserProfile, signInWithGoogle } = useAuth();
+  const { createUser, updateUserProfile, signInWithGoogle, loading } =
+    useAuth();
   const {
     register,
     handleSubmit,
@@ -48,8 +51,28 @@ const Signup = () => {
       navigate("/");
       toast.success("Registration Successful!");
     } catch (error) {
-      console.log(error);
-      toast.error(error?.message)
+      // console.log(error);
+      toast.error(error?.message);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      // user registration with google
+      const result = await signInWithGoogle();
+
+      // save userInfo to database
+      const dbResponse = await saveUser(result?.user);
+      console.log(dbResponse);
+
+      // get token
+      await getToken(result?.user?.email);
+
+      // navigate user after successfull sign up and show a toast
+      navigate("/");
+      toast.success("Registration Successful!");
+    } catch (error) {
+      toast.error(error?.message);
     }
   };
 
@@ -85,7 +108,7 @@ const Signup = () => {
           >
             <Box
               sx={{
-                my: 8,
+                my: 5,
                 mx: 4,
                 display: "flex",
                 flexDirection: "column",
@@ -102,8 +125,8 @@ const Signup = () => {
                       src={avater} // Replace with the path to your placeholder image
                       alt="Upload Image"
                       style={{
-                        width: "100px",
-                        height: "100px",
+                        width: "80px",
+                        height: "80px",
                         border: "1px solid #ccc",
                         cursor: "pointer",
                         borderRadius: "50%",
@@ -157,17 +180,30 @@ const Signup = () => {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{ mt: 3, mb: 2, fontWeight: 600 }}
                 >
-                  Sign Up
+                  {loading ? (
+                    <ImSpinner9 className="animate-spin m-auto" size={18} />
+                  ) : (
+                    "Sign Up"
+                  )}
                 </Button>
-                <Grid>
+                <Grid style={{ textAlign: "center" }}>
                   <Link className="font-semibold" to="/signup">
                     Already have an account?{" "}
                     <span className="text-[#1E88E5]">Sign In</span>
                   </Link>
                 </Grid>
               </form>
+              <Button
+                style={{ marginTop: "16px", fontWeight: 600 }}
+                fullWidth
+                variant="outlined"
+                startIcon={<FcGoogle />}
+                onClick={handleGoogleSignIn}
+              >
+                Sign in with google
+              </Button>
             </Box>
           </Grid>
         </Grid>

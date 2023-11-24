@@ -6,7 +6,7 @@ import { AwesomeButton } from "react-awesome-button";
 
 const Dropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useAuth();
+  const { user, logOut } = useAuth();
 
   return (
     <div className="relative">
@@ -40,7 +40,7 @@ const Dropdown = () => {
               Dashboard
             </Link>
 
-            <AwesomeButton type="primary">Logout</AwesomeButton>
+            <AwesomeButton onPress={logOut} type="primary">Logout</AwesomeButton>
           </div>
         </div>
       )}
