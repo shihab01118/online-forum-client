@@ -9,18 +9,61 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Container from "../../components/shared/Container";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import useAuth from "../../hooks/useAuth";
+import { getToken, saveUser } from "../../api/auth";
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { ImSpinner9 } from "react-icons/im";
 
 const defaultTheme = createTheme();
 
 const Login = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const { signInWithGoogle, signIn, loading } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    try {
+      // login a user
+      const result = await signIn(data?.email, data?.password);
+
+      // get token
+      await getToken(result?.user?.email);
+
+      // navigate user after successfull sign up and show a toast
+      navigate(from, {replace: true});
+      toast.success("Login Successful!");
+    } catch (error) {
+      toast.error(error?.message);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      // user registration with google
+      const result = await signInWithGoogle();
+
+      // save userInfo to database
+      const dbResponse = await saveUser(result?.user);
+      console.log(dbResponse);
+
+      // get token
+      await getToken(result?.user?.email);
+
+      // navigate user after successfull sign up and show a toast
+      navigate(from, {replace: true});
+      toast.success("Login Successful!");
+    } catch (error) {
+      toast.error(error?.message);
+    }
   };
 
   return (
@@ -66,44 +109,58 @@ const Login = () => {
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" fontWeight={600} variant="h5">
-                Sign in
+                Sign In
               </Typography>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <TextField
                   margin="normal"
-                  required
                   fullWidth
-                  id="email"
+                  type="email"
                   label="Email Address"
-                  name="email"
-                  autoComplete="email"
                   autoFocus
+                  {...register("email", { required: true })}
                 />
+                {errors.email && (
+                  <p className="text-red-600 mt-2">Email must be required</p>
+                )}
                 <TextField
                   margin="normal"
-                  required
                   fullWidth
-                  name="password"
                   label="Password"
                   type="password"
-                  id="password"
-                  autoComplete="current-password"
+                  {...register("password", { required: true })}
                 />
+                {errors.password && (
+                  <p className="text-red-600 mt-2">Password must be required</p>
+                )}
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                 >
-                  Sign In
+                  {loading ? (
+                    <ImSpinner9 className="animate-spin m-auto" size={24} />
+                  ) : (
+                    "Sign in"
+                  )}
                 </Button>
-                <Grid>
+                <Grid style={{ textAlign: "center" }}>
                   <Link className="font-semibold" to="/signup">
                     Don{"'"}t have an account?{" "}
                     <span className="text-[#1E88E5]">Sign Up</span>
                   </Link>
                 </Grid>
               </form>
+              <Button
+                style={{ marginTop: "16px", fontWeight: 600 }}
+                fullWidth
+                variant="outlined"
+                startIcon={<FcGoogle />}
+                onClick={handleGoogleSignIn}
+              >
+                Sign in with google
+              </Button>
             </Box>
           </Grid>
         </Grid>

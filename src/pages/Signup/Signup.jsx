@@ -183,7 +183,7 @@ const Signup = () => {
                   sx={{ mt: 3, mb: 2, fontWeight: 600 }}
                 >
                   {loading ? (
-                    <ImSpinner9 className="animate-spin m-auto" size={18} />
+                    <ImSpinner9 className="animate-spin m-auto" size={24} />
                   ) : (
                     "Sign Up"
                   )}
