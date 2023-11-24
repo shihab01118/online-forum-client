@@ -12,7 +12,7 @@ const Navbar = () => {
   const { user } = useAuth();
 
   return (
-    <nav className="w-full bg-transparent z-10 shadow-sm">
+    <nav className="w-full fixed bg-white z-10 shadow-sm">
       <div className="py-4 border-b-[1px]">
         <Container>
           <div className="flex flex-row  items-center justify-between gap-3 md:gap-0">
@@ -29,7 +29,7 @@ const Navbar = () => {
                     height="32"
                   />
                   <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">
-                    DiscussHub
+                    Discuss<span className="text-[#1E88E5]">Hub</span>
                   </h2>
                 </div>
               </Link>
