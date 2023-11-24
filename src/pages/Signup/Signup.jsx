@@ -7,20 +7,50 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Container from "../../components/shared/Container";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import avater from "../../assets/images/placeholder.jpg";
+import { uploadImage } from "../../api/utils";
+import useAuth from "../../hooks/useAuth";
+import { getToken, saveUser } from "../../api/auth";
+import toast from "react-hot-toast";
 
 const defaultTheme = createTheme();
 
 const Signup = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const password = form.password.value;
-    const image = form.image.files[0].name;
-    console.log({ name, email, password, image });
+  const navigate = useNavigate();
+  const { createUser, updateUserProfile, signInWithGoogle } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = async (data) => {
+    try {
+      // upload user image to imgbb
+      const imageData = await uploadImage(data?.image[0]);
+
+      // create a user
+      const result = await createUser(data?.email, data?.password);
+
+      // update user profile
+      await updateUserProfile(data?.name, imageData?.data?.display_url);
+      console.log(result.user);
+
+      // save userInfo to database
+      const dbResponse = await saveUser(result?.user);
+      console.log(dbResponse);
+
+      // get token
+      await getToken(result?.user?.email);
+
+      // navigate user after successfull sign up and show a toast
+      navigate("/");
+      toast.success("Registration Successful!");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message)
+    }
   };
 
   return (
@@ -65,7 +95,7 @@ const Signup = () => {
               <Typography component="h1" fontWeight={600} variant="h5">
                 Sign Up
               </Typography>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="w-fit mx-auto mt-6">
                   <label htmlFor="fileInput" style={{ display: "block" }}>
                     <img
@@ -82,40 +112,47 @@ const Signup = () => {
                     <TextField
                       type="file"
                       id="fileInput"
-                      name="image"
                       accept="image/*"
-                      required
                       style={{ display: "none" }}
+                      {...register("image", { required: true })}
                     />
                   </label>
                 </div>
+                {errors.image && (
+                  <p className="text-red-600 text-center mt-2">
+                    Image must be required
+                  </p>
+                )}
                 <TextField
                   margin="normal"
-                  required
                   fullWidth
                   label="Your Name"
-                  name="name"
-                  autoComplete="name"
-                  autoFocus
+                  type="text"
+                  {...register("name", { required: true })}
                 />
+                {errors.name && (
+                  <p className="text-red-600 mt-2">Name must be required</p>
+                )}
                 <TextField
                   margin="normal"
-                  required
                   fullWidth
                   label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
+                  type="email"
+                  {...register("email", { required: true })}
                 />
+                {errors.email && (
+                  <p className="text-red-600 mt-2">Email must be required</p>
+                )}
                 <TextField
                   margin="normal"
-                  required
                   fullWidth
-                  name="password"
                   label="Password"
                   type="password"
-                  autoComplete="current-password"
+                  {...register("password", { required: true })}
                 />
+                {errors.password && (
+                  <p className="text-red-600 mt-2">Password must be required</p>
+                )}
                 <Button
                   type="submit"
                   fullWidth

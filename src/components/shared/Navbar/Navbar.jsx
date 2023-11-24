@@ -40,7 +40,13 @@ const Navbar = () => {
                 className="text-[#1E88E5] cursor-pointer"
                 size={26}
               />
-              {user ? <Dropdown /> : <AwesomeButton>Join Now</AwesomeButton>}
+              {user ? (
+                <Dropdown />
+              ) : (
+                <Link to="/login">
+                  <AwesomeButton>Join Now</AwesomeButton>
+                </Link>
+              )}
             </div>
           </div>
         </Container>
