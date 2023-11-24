@@ -4,9 +4,10 @@ import Container from "../Container";
 import NavLinks from "./NavLinks";
 import Dropdown from "./Dropdown";
 import useAuth from "../../../hooks/useAuth";
-import { IoMdNotifications } from "react-icons/io";
 import { AwesomeButton } from "react-awesome-button";
 import MenuDropdown from "./MenuDropdown";
+import Badge from "@mui/material/Badge";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 
 const Navbar = () => {
   const { user } = useAuth();
@@ -36,10 +37,13 @@ const Navbar = () => {
             </div>
             <div className="flex items-center gap-5 md:gap-8">
               <NavLinks />
-              <IoMdNotifications
-                className="text-[#1E88E5] cursor-pointer"
-                size={26}
-              />
+              <Badge
+                style={{ cursor: "pointer" }}
+                badgeContent={4}
+                color="primary"
+              >
+                <NotificationsIcon style={{fontSize: "26px"}} color="action" />
+              </Badge>
               {user ? (
                 <Dropdown />
               ) : (

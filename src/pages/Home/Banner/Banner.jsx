@@ -6,6 +6,12 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Banner = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const value = e.target.search.value;
+    console.log(value);
+  };
+
   return (
     <div className="relative">
       <div className="h-[80vh]">
@@ -22,6 +28,7 @@ const Banner = () => {
           </p>
           <Paper
             component="form"
+            onSubmit={handleSearch}
             sx={{
               p: "2px 4px",
               display: "flex",
@@ -36,7 +43,7 @@ const Banner = () => {
               inputProps={{ "aria-label": "search by tags" }}
             />
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+            <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
               <SearchIcon />
             </IconButton>
           </Paper>

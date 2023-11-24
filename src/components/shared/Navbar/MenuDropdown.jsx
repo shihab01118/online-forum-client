@@ -18,6 +18,7 @@ const MenuDropdown = () => {
             >
               Home
             </NavLink>
+            <hr />
             <NavLink
               to="/membership"
               className="px-4 py-2 hover:bg-base-100 transition font-semibold"

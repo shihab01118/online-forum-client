@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import { useState } from "react";
 import avatarImg from "../../../assets/images/placeholder.jpg";
-import { AwesomeButton } from "react-awesome-button";
+import { Button } from "@mui/material";
 
 const Dropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +14,7 @@ const Dropdown = () => {
         onClick={() => setIsOpen(!isOpen)}
         className="rounded-full cursor-pointer border-[1px] border-neutral-200 hover:shadow-lg transition"
       >
-        <div className="hidden md:block">
+        <div>
           {/* Avatar */}
           <img
             className="rounded-full"
@@ -32,15 +32,25 @@ const Dropdown = () => {
             <p className="px-4 py-2 hover:bg-base-100 transition font-semibold">
               {user ? user?.displayName : "shahed al amin shihab"}
             </p>
-
+            <hr />
             <Link
               to="/dashboard"
               className="px-4 py-2 hover:bg-base-100 transition font-semibold"
             >
               Dashboard
             </Link>
+            <hr />
 
-            <AwesomeButton onPress={logOut} type="primary">Logout</AwesomeButton>
+            <div className="px-4 py-2">
+              <Button
+                onClick={logOut}
+                disableElevation
+                fullWidth
+                variant="contained"
+              >
+                Log out
+              </Button>
+            </div>
           </div>
         </div>
       )}
