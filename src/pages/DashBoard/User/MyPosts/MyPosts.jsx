@@ -1,9 +1,10 @@
-const MyPosts = () => {
 
-    return (
-        <div>
-            <p> Hello, I am MyPosts </p>
-        </div>
-    )
+
+const MyPosts = () => {
+  return (
+    <div>
+      <p>my posts</p>
+    </div>
+  );
 };
 export default MyPosts;
