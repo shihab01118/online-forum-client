@@ -29,13 +29,13 @@ const Dropdown = () => {
       {isOpen && (
         <div className="absolute rounded-xl shadow-md w-[40vw] md:max-w-[15vw] bg-white overflow-hidden right-0 top-12 text-sm border border-[#1E88E5]">
           <div className="flex flex-col">
-            <p className="px-4 py-2 hover:bg-base-100 transition font-semibold">
-              {user ? user?.displayName : "shahed al amin shihab"}
+            <p className="px-4 py-2 hover:bg-base-100 transition font-semibold text-[#757575]">
+              {user?.displayName}
             </p>
             <hr />
             <Link
-              to="/dashboard"
-              className="px-4 py-2 hover:bg-base-100 transition font-semibold"
+              to="/dashboard/userProfile"
+              className="px-4 py-2 hover:bg-base-100 transition font-semibold text-[#757575]"
             >
               Dashboard
             </Link>
