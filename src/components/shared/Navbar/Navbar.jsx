@@ -8,9 +8,11 @@ import { AwesomeButton } from "react-awesome-button";
 import MenuDropdown from "./MenuDropdown";
 import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import useGetAnnouncements from "../../../hooks/useGetAnnouncements";
 
 const Navbar = () => {
   const { user } = useAuth();
+  const { announcements } = useGetAnnouncements();
 
   return (
     <nav className="w-full fixed bg-white z-10 shadow-sm">
@@ -39,10 +41,13 @@ const Navbar = () => {
               <NavLinks />
               <Badge
                 style={{ cursor: "pointer" }}
-                badgeContent={4}
+                badgeContent={announcements?.length}
                 color="primary"
               >
-                <NotificationsIcon style={{fontSize: "26px"}} color="action" />
+                <NotificationsIcon
+                  style={{ fontSize: "26px" }}
+                  color="action"
+                />
               </Badge>
               {user ? (
                 <Dropdown />

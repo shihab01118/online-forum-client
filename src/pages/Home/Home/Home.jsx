@@ -3,6 +3,7 @@ import Banner from "../Banner/Banner";
 import Tags from "../Tags/Tags";
 import Container from "../../../components/shared/Container";
 import Posts from "../Posts/Posts";
+import Announcements from "../Announcements/Announcements";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <Banner />
       <Container>
         <Tags />
+        <Announcements />
         <Posts />
       </Container>
     </>
