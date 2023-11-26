@@ -14,6 +14,7 @@ import AdminProfile from "../pages/DashBoard/Admin/AdminProfile/AdminProfile";
 import ManageUsers from "../pages/DashBoard/Admin/ManageUsers/ManageUsers";
 import Announcement from "../pages/DashBoard/Admin/Announcement/Announcement";
 import Activities from "../pages/DashBoard/Admin/Activities/Activities";
+import PostDetails from "../pages/Home/Posts/PostDetails";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/posts/:id",
+        element: <PostDetails />
       },
       {
         path: "membership",
