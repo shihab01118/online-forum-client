@@ -1,6 +1,8 @@
 import { GrLogout } from "react-icons/gr";
-import { FaUser, FaList, FaHome } from "react-icons/fa";
+import { FaUser, FaList, FaHome, FaUsers } from "react-icons/fa";
 import { MdPostAdd } from "react-icons/md";
+import { TbActivity } from "react-icons/tb";
+import { GrAnnounce } from "react-icons/gr";
 import { AiOutlineBars } from "react-icons/ai";
 import MenuItem from "./MenuItem";
 import Logo from "../shared/Logo";
@@ -10,6 +12,7 @@ import { useState } from "react";
 const Sidebar = () => {
   const [isActive, setIsActive] = useState(false);
   const { logOut } = useAuth();
+  const isAdmin = true;
 
   const handleToggle = () => {
     setIsActive(!isActive);
@@ -43,6 +46,28 @@ const Sidebar = () => {
           <hr className="my-3" />
           <div className="flex flex-col justify-between flex-1">
             <nav>
+              {isAdmin ? <>
+                <MenuItem
+                icon={FaUser}
+                label="Profile"
+                address="/dashboard/adminProfile"
+              />
+              <MenuItem
+                icon={FaUsers}
+                label="Manage Users"
+                address="/dashboard/manageUsers"
+              />
+              <MenuItem
+                icon={TbActivity}
+                label="Activities"
+                address="/dashboard/activities"
+              />
+              <MenuItem
+                icon={GrAnnounce}
+                label="Make Announcement"
+                address="/dashboard/makeAnnouncement"
+              />
+              </> : <>
               <MenuItem
                 icon={FaUser}
                 label="My Profile"
@@ -58,6 +83,7 @@ const Sidebar = () => {
                 label="My Posts"
                 address="/dashboard/myPosts"
               />
+              </>}
             </nav>
           </div>
         </div>
