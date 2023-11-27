@@ -8,11 +8,12 @@ import MenuItem from "./MenuItem";
 import Logo from "../shared/Logo";
 import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
+import useAdmin from "../../hooks/useAdmin";
 
 const Sidebar = () => {
   const [isActive, setIsActive] = useState(false);
   const { logOut } = useAuth();
-  const isAdmin = true;
+  const { isAdmin } = useAdmin();
 
   const handleToggle = () => {
     setIsActive(!isActive);
@@ -46,44 +47,48 @@ const Sidebar = () => {
           <hr className="my-3" />
           <div className="flex flex-col justify-between flex-1">
             <nav>
-              {isAdmin ? <>
-                <MenuItem
-                icon={FaUser}
-                label="Profile"
-                address="/dashboard/adminProfile"
-              />
-              <MenuItem
-                icon={FaUsers}
-                label="Manage Users"
-                address="/dashboard/manageUsers"
-              />
-              <MenuItem
-                icon={TbActivity}
-                label="Activities"
-                address="/dashboard/activities"
-              />
-              <MenuItem
-                icon={GrAnnounce}
-                label="Make Announcement"
-                address="/dashboard/makeAnnouncement"
-              />
-              </> : <>
-              <MenuItem
-                icon={FaUser}
-                label="My Profile"
-                address="/dashboard/userProfile"
-              />
-              <MenuItem
-                icon={MdPostAdd}
-                label="Add Post"
-                address="/dashboard/addPost"
-              />
-              <MenuItem
-                icon={FaList}
-                label="My Posts"
-                address="/dashboard/myPosts"
-              />
-              </>}
+              {isAdmin ? (
+                <>
+                  <MenuItem
+                    icon={FaUser}
+                    label="Profile"
+                    address="/dashboard/adminProfile"
+                  />
+                  <MenuItem
+                    icon={FaUsers}
+                    label="Manage Users"
+                    address="/dashboard/manageUsers"
+                  />
+                  <MenuItem
+                    icon={TbActivity}
+                    label="Activities"
+                    address="/dashboard/activities"
+                  />
+                  <MenuItem
+                    icon={GrAnnounce}
+                    label="Make Announcement"
+                    address="/dashboard/makeAnnouncement"
+                  />
+                </>
+              ) : (
+                <>
+                  <MenuItem
+                    icon={FaUser}
+                    label="My Profile"
+                    address="/dashboard/userProfile"
+                  />
+                  <MenuItem
+                    icon={MdPostAdd}
+                    label="Add Post"
+                    address="/dashboard/addPost"
+                  />
+                  <MenuItem
+                    icon={FaList}
+                    label="My Posts"
+                    address="/dashboard/myPosts"
+                  />
+                </>
+              )}
             </nav>
           </div>
         </div>

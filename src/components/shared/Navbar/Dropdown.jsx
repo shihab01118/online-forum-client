@@ -3,10 +3,12 @@ import useAuth from "../../../hooks/useAuth";
 import { useState } from "react";
 import avatarImg from "../../../assets/images/placeholder.jpg";
 import { Button } from "@mui/material";
+import useAdmin from "../../../hooks/useAdmin";
 
 const Dropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logOut } = useAuth();
+  const { isAdmin } = useAdmin();
 
   return (
     <div className="relative">
@@ -34,7 +36,9 @@ const Dropdown = () => {
             </p>
             <hr />
             <Link
-              to="/dashboard/userProfile"
+              to={
+                isAdmin ? "/dashboard/adminProfile" : "/dashboard/userProfile"
+              }
               className="px-4 py-2 hover:bg-base-100 transition font-semibold text-[#757575]"
             >
               Dashboard

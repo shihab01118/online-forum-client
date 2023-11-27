@@ -17,7 +17,7 @@ const MenuItem = ({ label, address, icon: Icon }) => {
 MenuItem.propTypes = {
   label: PropTypes.string,
   address: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.any,
 };
 
 export default MenuItem;
