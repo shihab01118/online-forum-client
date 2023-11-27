@@ -23,7 +23,7 @@ const AddPost = () => {
   const { data: userPosts, refetch } = useQuery({
     queryKey: ["userPosts", axiosSecure],
     queryFn: async () => {
-      const { data } = await axiosSecure(`/posts/count/${authorEmail}`);
+      const { data } = await axiosSecure(`/posts/user/count/${authorEmail}`);
       return data;
     },
   });

@@ -13,7 +13,9 @@ export const uploadImage = async (image) => {
   return data;
 };
 
+// get post by id
 export const getPostById = async (id) => {
   const { data } = await axiosSecure(`/users/posts/${id}`);
   return data;
 };
+

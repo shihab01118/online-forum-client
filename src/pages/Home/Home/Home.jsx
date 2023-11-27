@@ -4,8 +4,11 @@ import Tags from "../Tags/Tags";
 import Container from "../../../components/shared/Container";
 import Posts from "../Posts/Posts";
 import Announcements from "../Announcements/Announcements";
+import { useLoaderData } from "react-router-dom";
 
 const Home = () => {
+  const {count} = useLoaderData();
+  console.log(count);
   return (
     <>
       <Helmet>
@@ -15,7 +18,7 @@ const Home = () => {
       <Container>
         <Tags />
         <Announcements />
-        <Posts />
+        <Posts count={count} />
       </Container>
     </>
   );
