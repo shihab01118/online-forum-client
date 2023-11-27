@@ -10,15 +10,19 @@ import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import { AwesomeButton } from "react-awesome-button";
 import { Link } from "react-router-dom";
+import useGetUser from "../../../../hooks/useGetUser";
 
 const AddPost = () => {
   const [tag, setTag] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const { user } = useAuth();
+  const currentUser = useGetUser();
   const authorName = user?.displayName;
   const authorEmail = user?.email;
   const authorImage = user?.photoURL;
+
+  console.log(currentUser);
 
   const { data: userPosts, refetch } = useQuery({
     queryKey: ["userPosts", axiosSecure],
@@ -27,8 +31,7 @@ const AddPost = () => {
       return data;
     },
   });
-
-  console.log(userPosts?.count);
+  console.log(userPosts);
 
   const handleAddPost = async (e) => {
     e.preventDefault();
@@ -60,7 +63,7 @@ const AddPost = () => {
       <Helmet>
         <title>Dashboard - Add Post</title>
       </Helmet>
-      {userPosts?.count >= 5 ? (
+      {!currentUser?.badge === "gold" ? (
         <>
           <div className="h-[calc(100vh-40px)] flex justify-center items-center">
             <div className="text-center max-w-xl mx-auto flex flex-col gap-3">

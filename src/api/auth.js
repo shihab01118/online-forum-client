@@ -6,7 +6,7 @@ export const saveUser = async (user) => {
     badge: "bronze",
     email: user?.email,
     name: user?.displayName,
-    role: "admin",
+    role: "user",
   };
   const { data } = await axiosSecure.put(`/users/${user?.email}`, newUser);
   return data;

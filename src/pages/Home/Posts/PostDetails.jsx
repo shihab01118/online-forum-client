@@ -12,18 +12,42 @@ import {
   WhatsappShareButton,
   WhatsappIcon,
 } from "react-share";
+import { Button, TextField } from "@mui/material";
+import { useState } from "react";
+import useAuth from "../../../hooks/useAuth";
+import axiosSecure from "../../../api";
+import toast from "react-hot-toast";
 
 const PostDetails = () => {
+  const { user } = useAuth();
   const post = useLoaderData();
+  const [comment, setComment] = useState("");
 
-  const { name, img, title, tag, description, createdAt } = post || {};
+  const { name, img, title, tag, description, createdAt, _id } = post || {};
 
   const totalTime = formatDistance(new Date(createdAt), new Date(), {
     addSuffix: true,
   });
 
+  const handleComment = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const commentData = {
+      commenterEmail: user?.email,
+      comment: comment,
+      commentedPost: title,
+    };
+
+    const { data } = await axiosSecure.post("/comments", commentData);
+    if (data._id) {
+      form.reset();
+      toast.success("Comment Added!");
+    }
+  };
+
   return (
-    <div className="py-[78px]">
+    <div className="py-[78px] min:h-[calc(100vh-78px)]">
       <Card
         sx={{ maxWidth: 800, padding: 3, margin: "20px auto" }}
         elevation={5}
@@ -59,14 +83,40 @@ const PostDetails = () => {
             </IconButton>
           </div>
           <div className="flex gap-3 items-center">
-            <FacebookShareButton url="https://web.programming-hero.com/dashboard">
+            <FacebookShareButton
+              url={`https://online-forum-f9255.web.app/posts/${_id}`}
+            >
               <FacebookIcon round size={26} />
             </FacebookShareButton>
-            <WhatsappShareButton url="https://web.programming-hero.com/dashboard">
+            <WhatsappShareButton
+              url={`https://online-forum-f9255.web.app/posts/${_id}`}
+            >
               <WhatsappIcon round size={26} />
             </WhatsappShareButton>
           </div>
         </div>
+        <form onSubmit={handleComment}>
+          <div className="flex flex-col gap-4">
+            <TextField
+              onChange={(e) => setComment(e.target.value)}
+              style={{ marginTop: "24px" }}
+              id="post-content"
+              label="Write A Comment"
+              multiline
+              rows={2}
+              fullWidth
+              variant="outlined"
+              elevation={4}
+            />
+            <Button
+              variant="contained"
+              type="submit"
+              style={{ marginTop: "auto", width: "fit-content" }}
+            >
+              Comment
+            </Button>
+          </div>
+        </form>
       </Card>
     </div>
   );

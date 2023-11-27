@@ -8,7 +8,6 @@ const useAdmin = () => {
     queryKey: ["isAdmin", user?.email],
     queryFn: async () => {
       const data = await getRole(user?.email);
-      console.log(data);
       return data?.admin;
     },
   });
