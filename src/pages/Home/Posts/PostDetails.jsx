@@ -1,5 +1,4 @@
-import { useParams } from "react-router-dom";
-import usePosts from "../../../hooks/usePosts";
+import { useLoaderData } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
@@ -7,13 +6,16 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import { formatDistance } from "date-fns";
-import {FacebookShareButton, FacebookIcon, WhatsappShareButton, WhatsappIcon} from "react-share"
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+} from "react-share";
 
 const PostDetails = () => {
-  const { id } = useParams();
-  const { posts } = usePosts();
+  const post = useLoaderData();
 
-  const post = posts?.find((post) => post?._id === id);
   const { name, img, title, tag, description, createdAt } = post || {};
 
   const totalTime = formatDistance(new Date(createdAt), new Date(), {
@@ -58,10 +60,10 @@ const PostDetails = () => {
           </div>
           <div className="flex gap-3 items-center">
             <FacebookShareButton url="https://web.programming-hero.com/dashboard">
-                <FacebookIcon round size={26} />
+              <FacebookIcon round size={26} />
             </FacebookShareButton>
             <WhatsappShareButton url="https://web.programming-hero.com/dashboard">
-                <WhatsappIcon round size={26} />
+              <WhatsappIcon round size={26} />
             </WhatsappShareButton>
           </div>
         </div>

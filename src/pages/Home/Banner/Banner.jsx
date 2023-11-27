@@ -1,15 +1,33 @@
+/* eslint-disable no-unused-vars */
 import banner from "../../../assets/images/banner.jpg";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import qs from "query-string";
 
 const Banner = () => {
+  const [params, setParams] = useSearchParams();
+  const navigate = useNavigate();
+
   const handleSearch = (e) => {
     e.preventDefault();
     const value = e.target.search.value;
-    console.log(value);
+
+    let currentQuery = {};
+    if (params) {
+      currentQuery = qs.parse(params.toString());
+      const updatedQuery = { ...currentQuery, tag: value };
+
+      const url = qs.stringifyUrl({
+        url: "/",
+        query: updatedQuery,
+      });
+
+      navigate(url);
+    }
   };
 
   return (

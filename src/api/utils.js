@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosSecure from ".";
 
 export const uploadImage = async (image) => {
   const formData = new FormData();
@@ -9,5 +10,10 @@ export const uploadImage = async (image) => {
     formData
   );
 
+  return data;
+};
+
+export const getPostById = async (id) => {
+  const { data } = await axiosSecure(`/users/posts/${id}`);
   return data;
 };

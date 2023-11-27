@@ -16,6 +16,7 @@ import Announcement from "../pages/DashBoard/Admin/Announcement/Announcement";
 import Activities from "../pages/DashBoard/Admin/Activities/Activities";
 import PostDetails from "../pages/Home/Posts/PostDetails";
 import AdminRoute from "./AdminRoute";
+import { getPostById } from "../api/utils";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ export const router = createBrowserRouter([
             <PostDetails />
           </PrivateRoute>
         ),
+        loader: ({ params }) => getPostById(params.id),
       },
       {
         path: "membership",
