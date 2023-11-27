@@ -4,7 +4,7 @@ import { getRole } from "../api/auth";
 
 const useAdmin = () => {
   const { user } = useAuth();
-  const { data: isAdmin } = useQuery({
+  const { data: isAdmin, isLoading: isAdminLoading } = useQuery({
     queryKey: ["isAdmin", user?.email],
     queryFn: async () => {
       const data = await getRole(user?.email);
@@ -13,6 +13,6 @@ const useAdmin = () => {
     },
   });
 
-  return { isAdmin };
+  return { isAdmin, isAdminLoading };
 };
 export default useAdmin;

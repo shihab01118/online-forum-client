@@ -15,6 +15,7 @@ import ManageUsers from "../pages/DashBoard/Admin/ManageUsers/ManageUsers";
 import Announcement from "../pages/DashBoard/Admin/Announcement/Announcement";
 import Activities from "../pages/DashBoard/Admin/Activities/Activities";
 import PostDetails from "../pages/Home/Posts/PostDetails";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -28,7 +29,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/posts/:id",
-        element: <PostDetails />
+        element: (
+          <PrivateRoute>
+            <PostDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "membership",
@@ -44,7 +49,11 @@ export const router = createBrowserRouter([
   { path: "/signup", element: <Signup /> },
   {
     path: "/dashboard",
-    element: <PrivateRoute><Dashboard /></PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
     children: [
       // user routes
       {
@@ -63,19 +72,35 @@ export const router = createBrowserRouter([
       // admin routes
       {
         path: "adminProfile",
-        element: <AdminProfile />,
+        element: (
+          <AdminRoute>
+            <AdminProfile />
+          </AdminRoute>
+        ),
       },
       {
         path: "manageUsers",
-        element: <ManageUsers />,
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
       },
       {
         path: "makeAnnouncement",
-        element: <Announcement />,
+        element: (
+          <AdminRoute>
+            <Announcement />
+          </AdminRoute>
+        ),
       },
       {
         path: "activities",
-        element: <Activities />,
+        element: (
+          <AdminRoute>
+            <Activities />
+          </AdminRoute>
+        ),
       },
     ],
   },

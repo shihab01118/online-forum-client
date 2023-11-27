@@ -1,6 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
-import axiosSecure from "../../../../api";
-import useAuth from "../../../../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
 import Title from "../../../../components/Dashboard/Title";
 import { IconButton } from "@mui/material";
@@ -8,16 +5,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 import { AwesomeButton } from "react-awesome-button";
 import Loader from "../../../../components/shared/Loader";
+import useGetUserPosts from "../../../../hooks/useGetUserPosts";
 
 const MyPosts = () => {
-  const { user } = useAuth();
-  const { data: posts, isLoading } = useQuery({
-    queryKey: ["posts", axiosSecure, user?.email],
-    queryFn: async () => {
-      const { data } = await axiosSecure(`/posts/${user?.email}`);
-      return data;
-    },
-  });
+  const { posts, isLoading } = useGetUserPosts();
 
   if (isLoading) return <Loader />;
 
@@ -44,7 +35,10 @@ const MyPosts = () => {
               </thead>
               <tbody>
                 {posts?.map((post) => (
-                  <tr key={post?.title} className="text-center  text-[#757575] font-medium">
+                  <tr
+                    key={post?.title}
+                    className="text-center  text-[#757575] font-medium"
+                  >
                     <th>{post?.title}</th>
                     <td>{post?.upVote}</td>
                     <td>

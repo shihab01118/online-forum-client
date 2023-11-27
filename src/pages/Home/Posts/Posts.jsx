@@ -10,7 +10,7 @@ const Posts = () => {
   if (isLoading) return <Loader />
 
   return (
-    <div>
+    <div className="my-16">
       <Title
         heading="Explore Diverse Perspectives"
         subheading="Engage, Share, and Discover Insights from our Community's Posts"

@@ -29,3 +29,4 @@ export const getRole = async (email) => {
   const { data } = await axiosSecure(`/users/role/${email}`);
   return data;
 };
+
