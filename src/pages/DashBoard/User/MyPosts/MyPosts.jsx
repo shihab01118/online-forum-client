@@ -42,7 +42,9 @@ const MyPosts = () => {
                     <th>{post?.title}</th>
                     <td>{post?.upVote}</td>
                     <td>
+                      <Link to={`comments/${post?.title}`}>
                       <button className="btn btn-sm">Comments</button>
+                      </Link>
                     </td>
                     <td>
                       <IconButton color="error" aria-label="delete">

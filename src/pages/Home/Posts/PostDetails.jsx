@@ -17,9 +17,12 @@ import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import axiosSecure from "../../../api";
 import toast from "react-hot-toast";
+import usePosts from "../../../hooks/usePosts";
+import { Helmet } from "react-helmet-async";
 
 const PostDetails = () => {
   const { user } = useAuth();
+  const { refetch } = usePosts();
   const post = useLoaderData();
   const [comment, setComment] = useState("");
 
@@ -40,14 +43,40 @@ const PostDetails = () => {
     };
 
     const { data } = await axiosSecure.post("/comments", commentData);
+    console.log(data);
     if (data._id) {
       form.reset();
       toast.success("Comment Added!");
     }
   };
 
+  const handleLike = async () => {
+    const res = await axiosSecure.put(`/posts/${_id}/like`, {
+      action: "like",
+    });
+    console.log(res);
+    if (res.status === 200) {
+      refetch();
+      toast.success("You liked this post");
+    }
+  };
+
+  const handleDislike = async () => {
+    const res = await axiosSecure.put(`/posts/${_id}/like`, {
+      action: "dislike",
+    });
+    console.log(res);
+    if (res.status === 200) {
+      refetch();
+      toast.error("You disliked this post");
+    }
+  }
+
   return (
     <div className="py-[78px] min:h-[calc(100vh-78px)]">
+      <Helmet>
+        <title>{`${title}`}</title>
+      </Helmet>
       <Card
         sx={{ maxWidth: 800, padding: 3, margin: "20px auto" }}
         elevation={5}
@@ -72,10 +101,10 @@ const PostDetails = () => {
         </CardContent>
         <div className="flex justify-between items-center">
           <div className="ml-2">
-            <IconButton>
+            <IconButton onClick={handleLike}>
               <ThumbUpIcon color="primary" />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={handleDislike}>
               <ThumbDownIcon color="error" />
             </IconButton>
             <IconButton>

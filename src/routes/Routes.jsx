@@ -17,6 +17,7 @@ import Activities from "../pages/DashBoard/Admin/Activities/Activities";
 import PostDetails from "../pages/Home/Posts/PostDetails";
 import AdminRoute from "./AdminRoute";
 import { getPostById } from "../api/utils";
+import Comments from "../pages/DashBoard/User/Comments/Comments";
 
 export const router = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ export const router = createBrowserRouter([
       {
         path: "myPosts",
         element: <MyPosts />,
+      },
+      {
+        path: "myPosts/comments/:title",
+        element: <Comments />,
       },
 
       // admin routes

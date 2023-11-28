@@ -4,7 +4,7 @@ import useAxiosPublic from "./useAxiosPublic";
 const usePosts = () => {
   const axiosPublic = useAxiosPublic();
 
-  const { data: posts, isLoading } = useQuery({
+  const { data: posts, isLoading, refetch } = useQuery({
     queryKey: ["posts", axiosPublic],
     queryFn: async () => {
       const { data } = await axiosPublic("/posts");
@@ -12,6 +12,6 @@ const usePosts = () => {
     },
   });
 
-  return { posts, isLoading };
+  return { posts, isLoading, refetch };
 };
 export default usePosts;

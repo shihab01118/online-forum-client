@@ -43,7 +43,7 @@ const Login = () => {
       navigate(from, { replace: true });
       toast.success("Login Successful!");
     } catch (error) {
-      toast.error(error?.message);
+      toast.error("Invalid Email/Password!");
     }
   };
 
@@ -63,7 +63,7 @@ const Login = () => {
       navigate(from, { replace: true });
       toast.success("Login Successful!");
     } catch (error) {
-      toast.error(error?.message);
+      toast.error("Invalid Email/Password!");
     }
   };
 

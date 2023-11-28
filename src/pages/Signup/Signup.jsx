@@ -73,7 +73,7 @@ const Signup = () => {
       navigate("/");
       toast.success("Registration Successful!");
     } catch (error) {
-      toast.error(error?.message);
+      toast.error("Invalid Email/Password!");
     }
   };
 
