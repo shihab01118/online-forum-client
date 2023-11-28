@@ -39,6 +39,7 @@ const CommentRow = ({ comment }) => {
       reporterEmail: user?.email,
       commentedPost: comment?.commentedPost,
       feedback: feedback,
+      commentId: comment?._id,
     };
     // console.log(reportedComment);
     const { data } = await axiosSecure.post("/reportedComments", reportedComment);
