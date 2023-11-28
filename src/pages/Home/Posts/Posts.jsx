@@ -6,7 +6,6 @@ import Post from "./Post";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import PropTypes from "prop-types";
-import { useQuery } from "@tanstack/react-query";
 import { Button } from "@mui/material";
 
 const Posts = ({ count }) => {
@@ -26,16 +25,6 @@ const Posts = ({ count }) => {
   for (let i = 1; i <= numberOfPages; i++) {
     pages.push(i);
   }
-
-  // const { data: posts, isLoading } = useQuery({
-  //   queryKey: ["posts", axiosPublic, currentPage, itemsPerPage],
-  //   queryFn: async () => {
-  //     const { data } = await axiosPublic(
-  //       `/posts?page=${currentPage - 1}&size=${itemsPerPage}`
-  //     );
-  //     return data;
-  //   },
-  // });
 
   useEffect(() => {
     setIsLoading(true);
@@ -57,8 +46,6 @@ const Posts = ({ count }) => {
     });
   }, [axiosPublic, currentPage, itemsPerPage]);
 
-  // console.log(pages);
-
   useEffect(() => {
     if (tag) {
       const filtered = posts?.filter((item) => item?.tag === tag.toLowerCase());
@@ -69,9 +56,6 @@ const Posts = ({ count }) => {
   if (isLoading) return <Loader />;
 
   const handleSortByPopularity = () => {
-    // const res = await axiosPublic(
-    //   `/posts/sort/popularity?page=${currentPage - 1}&size=${itemsPerPage}`
-    // );
     setPosts(sorted);
   };
 

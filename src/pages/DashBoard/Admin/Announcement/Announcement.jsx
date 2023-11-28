@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import Title from "../../../../components/Dashboard/Title";
 import useAuth from "../../../../hooks/useAuth";
-import { Button, TextField } from "@mui/material";
+import { Button, Card, TextField } from "@mui/material";
 import { useState } from "react";
 import axiosSecure from "../../../../api";
 import toast from "react-hot-toast";
@@ -45,9 +45,10 @@ const Announcement = () => {
           heading="Create Announcements"
           subheading="Broadcast Important Updates and Information"
         />
+        <Card elevation={5} style={{margin: "24px auto 0", maxWidth: "850px"}}>
         <form
           onSubmit={handleAnnounce}
-          className="mt-6 px-16 py-6 bg-base-200 rounded-md shadow-lg"
+          className="mt-6 px-16 py-6 bg-base-200"
         >
           <div className="grid md:grid-cols-2 mb-6 gap-6">
             <TextField
@@ -90,6 +91,7 @@ const Announcement = () => {
             </Button>
           </div>
         </form>
+        </Card>
       </div>
     </>
   );

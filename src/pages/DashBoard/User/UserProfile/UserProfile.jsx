@@ -6,6 +6,7 @@ import bronzeBadge from "../../../../assets/images/bronze.png";
 import useGetUserPosts from "../../../../hooks/useGetUserPosts";
 import Loader from "../../../../components/shared/Loader";
 import RecentPost from "./RecentPost";
+import { Card } from "@mui/material";
 
 const UserProfile = () => {
   const { user } = useAuth();
@@ -19,7 +20,8 @@ const UserProfile = () => {
       <Helmet>
         <title>Dashboard - Profile</title>
       </Helmet>
-      <div className="bg-white shadow-lg rounded-2xl w-4/6">
+      <div className=" rounded-2xl w-4/6">
+        <Card elevation={5}>
         <img
           alt="profile"
           src="https://img.freepik.com/free-photo/abstract-grunge-decorative-relief-navy-blue-stucco-wall-texture-wide-angle-rough-colored-background_1258-28311.jpg"
@@ -66,6 +68,7 @@ const UserProfile = () => {
             ))}
           </div>
         </div>
+        </Card>
       </div>
     </div>
   );
