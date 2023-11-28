@@ -11,27 +11,30 @@ import { useQuery } from "@tanstack/react-query";
 import { AwesomeButton } from "react-awesome-button";
 import { Link } from "react-router-dom";
 import useGetUser from "../../../../hooks/useGetUser";
+import Loader from "../../../../components/shared/Loader";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 
 const AddPost = () => {
   const [tag, setTag] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const { user } = useAuth();
+  const axiosPublic = useAxiosPublic();
   const currentUser = useGetUser();
   const authorName = user?.displayName;
   const authorEmail = user?.email;
   const authorImage = user?.photoURL;
 
-  console.log(currentUser);
-
-  const { data: userPosts, refetch } = useQuery({
-    queryKey: ["userPosts", axiosSecure],
+  const { data: tags, isLoading } = useQuery({
+    queryKey: ["tags", axiosPublic],
     queryFn: async () => {
-      const { data } = await axiosSecure(`/posts/user/count/${authorEmail}`);
+      const { data } = await axiosPublic("/tags");
       return data;
     },
   });
-  console.log(userPosts);
+  console.log(tags);
+
+  if (isLoading) return <Loader />;
 
   const handleAddPost = async (e) => {
     e.preventDefault();
@@ -52,12 +55,12 @@ const AddPost = () => {
         setTag("");
         form.reset();
         toast.success("Post Added Successfully!");
-        refetch();
       }
     } catch (error) {
       toast.error(error.message);
     }
   };
+
   return (
     <>
       <Helmet>
@@ -137,16 +140,11 @@ const AddPost = () => {
                   onChange={(e) => setTag(e.target.value)}
                   fullWidth
                 >
-                  <MenuItem value="technology">Technology</MenuItem>
-                  <MenuItem value="science">Science</MenuItem>
-                  <MenuItem value="art">Art</MenuItem>
-                  <MenuItem value="design">Design</MenuItem>
-                  <MenuItem value="programming">Programming</MenuItem>
-                  <MenuItem value="travel">Travel</MenuItem>
-                  <MenuItem value="food">Food</MenuItem>
-                  <MenuItem value="health">Health</MenuItem>
-                  <MenuItem value="business">Business</MenuItem>
-                  <MenuItem value="education">Education</MenuItem>
+                  {tags?.map((item) => (
+                    <MenuItem key={item?._id} value={item?.tag.toLowerCase()}>
+                      {item?.tag}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </div>
