@@ -6,6 +6,7 @@ import axiosSecure from "../../api";
 import useAuth from "../../hooks/useAuth";
 import useUsers from "../../hooks/useUsers";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 
 const CheckoutForm = () => {
@@ -16,6 +17,7 @@ const CheckoutForm = () => {
   const [transactionId, setTransactionId] = useState("");
   const { user } = useAuth();
   const { refetch } = useUsers();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axiosSecure.post("/create-payment-intent", { money: 20 }).then((res) => {
@@ -65,7 +67,7 @@ const CheckoutForm = () => {
     if (paymentError) {
       console.log("payment error", paymentError);
     } else {
-      console.log("payment intent", paymentIntent);
+      // console.log("payment intent", paymentIntent);
       if (paymentIntent.status === "succeeded") {
         console.log("transaction Id : ", paymentIntent.id);
         setTransactionId(paymentIntent.id);
@@ -82,6 +84,7 @@ const CheckoutForm = () => {
         console.log(data);
         if (data.transactionId) {
           refetch();
+          navigate("/dashboard/userProfile");
           toast.success("Congratulations! Achived Gold Badge.");
         }
       }
@@ -110,15 +113,14 @@ const CheckoutForm = () => {
       <Button
         variant="contained"
         style={{display: "block", margin: "6px auto"}}
-        // className="block mx-auto mt-6 btn btn-sm btn-primary w-24 capitalize"
         type="submit"
         disabled={!stripe || !clientSecret}
       >
         Pay
       </Button>
       {transactionId && (
-        <p className="text-green-600">
-          Your transaction id is: {transactionId}
+        <p className="text-green-600 text-center font-medium">
+          Transaction Id: {transactionId}
         </p>
       )}
     </form>

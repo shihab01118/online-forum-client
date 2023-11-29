@@ -68,7 +68,7 @@ const AddPost = () => {
       </Helmet>
       {!currentUser?.badge === "gold" ? (
         <>
-          <div className="h-[calc(100vh-40px)] flex justify-center items-center">
+          <div className="h-[calc(100vh-48px)] flex justify-center items-center">
             <div className="text-center max-w-xl mx-auto flex flex-col gap-3">
               <h3 className="text-xl md:text-2xl text-red-500 font-bold">
                 Limit Exceeded!

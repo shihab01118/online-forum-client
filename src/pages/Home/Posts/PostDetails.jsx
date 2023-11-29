@@ -19,6 +19,7 @@ import axiosSecure from "../../../api";
 import toast from "react-hot-toast";
 import usePosts from "../../../hooks/usePosts";
 import { Helmet } from "react-helmet-async";
+import Container from "../../../components/shared/Container";
 
 const PostDetails = () => {
   const { user } = useAuth();
@@ -77,6 +78,7 @@ const PostDetails = () => {
       <Helmet>
         <title>{`${title}`}</title>
       </Helmet>
+      <Container>
       <Card
         sx={{ maxWidth: 800, padding: 3, margin: "20px auto" }}
         elevation={5}
@@ -147,6 +149,7 @@ const PostDetails = () => {
           </div>
         </form>
       </Card>
+      </Container>
     </div>
   );
 };

@@ -105,7 +105,7 @@ const MyPosts = () => {
           </div>
         </div>
       ) : (
-        <div className="h-[calc(100vh-40px)] flex justify-center items-center">
+        <div className="h-[calc(100vh-48px)] flex justify-center items-center">
           <div className="text-center">
             <p className="text-red-500 font-medium text-lg mb-3 capitalize">
               {" "}
