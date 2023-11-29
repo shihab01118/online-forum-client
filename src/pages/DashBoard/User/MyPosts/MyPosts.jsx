@@ -8,11 +8,17 @@ import Loader from "../../../../components/shared/Loader";
 import useAuth from "../../../../hooks/useAuth";
 import axiosSecure from "../../../../api";
 import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const MyPosts = () => {
   const { user } = useAuth();
 
-  const { data: posts, isLoading } = useQuery({
+  const {
+    data: posts,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["posts", axiosSecure, user?.email],
     queryFn: async () => {
       const { data } = await axiosSecure(`/posts/${user?.email}`);
@@ -21,6 +27,34 @@ const MyPosts = () => {
   });
 
   if (isLoading) return <Loader />;
+
+  const handleDelete = (post) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#1E88E5",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Continue",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .delete(`/posts/${post._id}`)
+          .then((res) => {
+            const data = res.data;
+            console.log(data);
+            if (data.deletedCount > 0) {
+              refetch();
+              toast.success("Post Deleted!");
+            }
+          })
+          .catch((error) => {
+            toast.error(error.message);
+          });
+      }
+    });
+  };
 
   return (
     <>
@@ -57,7 +91,11 @@ const MyPosts = () => {
                       </Link>
                     </td>
                     <td>
-                      <IconButton color="error" aria-label="delete">
+                      <IconButton
+                        onClick={() => handleDelete(post)}
+                        color="error"
+                        aria-label="delete"
+                      >
                         <DeleteIcon />
                       </IconButton>
                     </td>
