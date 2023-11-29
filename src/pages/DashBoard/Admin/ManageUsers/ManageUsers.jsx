@@ -1,12 +1,27 @@
 import { Helmet } from "react-helmet-async";
 import Title from "../../../../components/Dashboard/Title";
-import useUsers from "../../../../hooks/useUsers";
 import Swal from "sweetalert2";
 import axiosSecure from "../../../../api";
 import toast from "react-hot-toast";
+import Loader from "../../../../components/shared/Loader";
+import { useQuery } from "@tanstack/react-query";
 
 const ManageUsers = () => {
-  const { users, refetch } = useUsers();
+  const {
+    data: users,
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["users", axiosSecure],
+    queryFn: async () => {
+      const { data } = await axiosSecure(
+        `/users`
+      );
+      return data;
+    },
+  });
+
+  if (isLoading) return <Loader />;
 
   const handleMakeAdmin = (user) => {
     Swal.fire({
@@ -80,6 +95,21 @@ const ManageUsers = () => {
               ))}
             </tbody>
           </table>
+            {/* <div className="w-fit mx-auto mt-6">
+              {pages?.map((page) => (
+                <button
+                  onClick={() => setCurrentPage(page)}
+                  className={
+                    currentPage === page
+                      ? "btn btn-xs btn-circle mr-2 bg-[#1E88E5] text-white"
+                      : "btn btn-xs btn-circle mr-2 text-[#1E88E5]"
+                  }
+                  key={page}
+                >
+                  {page}
+                </button>
+              ))}
+            </div> */}
         </div>
       </div>
     </>

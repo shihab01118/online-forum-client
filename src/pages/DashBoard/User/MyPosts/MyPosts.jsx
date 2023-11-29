@@ -5,10 +5,20 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 import { AwesomeButton } from "react-awesome-button";
 import Loader from "../../../../components/shared/Loader";
-import useGetUserPosts from "../../../../hooks/useGetUserPosts";
+import useAuth from "../../../../hooks/useAuth";
+import axiosSecure from "../../../../api";
+import { useQuery } from "@tanstack/react-query";
 
 const MyPosts = () => {
-  const { posts, isLoading } = useGetUserPosts();
+  const { user } = useAuth();
+
+  const { data: posts, isLoading } = useQuery({
+    queryKey: ["posts", axiosSecure, user?.email],
+    queryFn: async () => {
+      const { data } = await axiosSecure(`/posts/${user?.email}`);
+      return data;
+    },
+  });
 
   if (isLoading) return <Loader />;
 
@@ -43,7 +53,7 @@ const MyPosts = () => {
                     <td>{post?.upVote}</td>
                     <td>
                       <Link to={`comments/${post?.title}`}>
-                      <button className="btn btn-sm">Comments</button>
+                        <button className="btn btn-sm">Comments</button>
                       </Link>
                     </td>
                     <td>

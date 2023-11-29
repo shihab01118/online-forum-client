@@ -87,21 +87,23 @@ const Posts = ({ count }) => {
           ))}
         </div>
       )}
-      <div className="w-fit mx-auto mt-6">
-        {pages?.map((page) => (
-          <button
-            onClick={() => setCurrentPage(page)}
-            className={
-              currentPage === page
-                ? "btn btn-xs btn-circle mr-2 bg-[#1E88E5] text-white"
-                : "btn btn-xs btn-circle mr-2 text-[#1E88E5]"
-            }
-            key={page}
-          >
-            {page}
-          </button>
-        ))}
-      </div>
+      {!tag && (
+        <div className="w-fit mx-auto mt-6">
+          {pages?.map((page) => (
+            <button
+              onClick={() => setCurrentPage(page)}
+              className={
+                currentPage === page
+                  ? "btn btn-xs btn-circle mr-2 bg-[#1E88E5] text-white"
+                  : "btn btn-xs btn-circle mr-2 text-[#1E88E5]"
+              }
+              key={page}
+            >
+              {page}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

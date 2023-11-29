@@ -8,6 +8,7 @@ import CommentRow from "./CommentRow";
 
 const Comments = () => {
   const { title } = useParams();
+
   const { data: comments, isLoading } = useQuery({
     queryKey: ["comments", axiosSecure, title],
     queryFn: async () => {
