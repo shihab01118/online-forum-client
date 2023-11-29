@@ -11,8 +11,8 @@ const ReportedComment = ({ item, refetch }) => {
     reporterEmail,
     commentedPost,
     feedback,
-    // commentId,
-    // _id
+    commentId,
+    _id
   } = item || {};
 
   const handleDeleteComment = () => {
@@ -27,10 +27,9 @@ const ReportedComment = ({ item, refetch }) => {
       }).then((result) => {
         if (result.isConfirmed) {
           axiosSecure
-            .delete(`/comments/${commentedPost}`)
+            .delete(`/comments?commentId=${commentId}&reportedCommentId=${_id}`)
             .then((res) => {
               const data = res.data;
-              console.log(data);
               if (data.deletedCount > 0) {
                 refetch();
                 toast.success("Comment has been deleted!");
@@ -44,20 +43,20 @@ const ReportedComment = ({ item, refetch }) => {
   }
 
   return (
-      <div className="flex flex-col gap-3 p-5 bg-white rounded-md shadow-md">
+      <div className="flex flex-col gap-3 p-5 bg-gray-200 rounded-md shadow-lg">
         <h3 className="text-xl font-semibold">{commentedPost}</h3>
         <div className="flex-grow">
           <p className="font-medium">
-            Comment: <span className="text-[#757575]">{comment}</span>
+            Comment: <span className="text-[#757575] text-sm">{comment}</span>
           </p>
           <p className="font-medium">
-            Commenter: <span className="text-[#757575]">{commenterEmail}</span>
+            Commenter: <span className="text-[#757575] text-sm">{commenterEmail}</span>
           </p>
           <p className="font-medium">
-            Feedback: <span className="text-[#757575]">{feedback}</span>
+            Feedback: <span className="text-[#757575] text-sm">{feedback}</span>
           </p>
           <p className="font-medium flex-grow">
-            Reporter: <span className="text-[#757575]">{reporterEmail}</span>
+            Reporter: <span className="text-[#757575] text-sm">{reporterEmail}</span>
           </p>
         </div>
           <div className="w-fit ml-auto">

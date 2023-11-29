@@ -43,7 +43,6 @@ const MyPosts = () => {
           .delete(`/posts/${post._id}`)
           .then((res) => {
             const data = res.data;
-            console.log(data);
             if (data.deletedCount > 0) {
               refetch();
               toast.success("Post Deleted!");

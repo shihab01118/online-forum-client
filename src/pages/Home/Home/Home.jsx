@@ -8,7 +8,6 @@ import { useLoaderData } from "react-router-dom";
 
 const Home = () => {
   const {count} = useLoaderData();
-  console.log(count);
   return (
     <>
       <Helmet>

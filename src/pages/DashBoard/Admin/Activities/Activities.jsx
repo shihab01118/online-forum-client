@@ -21,19 +21,26 @@ const Activities = () => {
       <Helmet>
         <title>Dashboard - Activities</title>
       </Helmet>
-      <div>
+      {reportedComments.length ? <div>
         <Title
           heading="Admin Control Center"
           subheading="Review, Manage, and Act on Reported Activities"
         />
-        <div className="mt-6 bg-[#dee2e6] rounded-md shadow-xl px-16 py-8">
+        <div className="mt-6">
           <div className="grid md:grid-cols-2 gap-5">
             {reportedComments?.map((item) => (
               <ReportedComment key={item?._id} item={item} refetch={refetch} />
             ))}
           </div>
         </div>
-      </div>
+      </div> : <div className="h-[calc(100vh-40px)] flex justify-center items-center">
+            <div className="text-center">
+              <p className="text-red-500 font-medium text-lg mb-3 capitalize">
+                {" "}
+                No Activities Found!{" "}
+              </p>
+            </div>
+          </div>}
     </>
   );
 };
