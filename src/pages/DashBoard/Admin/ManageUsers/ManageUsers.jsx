@@ -5,17 +5,33 @@ import axiosSecure from "../../../../api";
 import toast from "react-hot-toast";
 import Loader from "../../../../components/shared/Loader";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 const ManageUsers = () => {
+  const [userCount, setUserCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    axiosSecure("/users/count").then((res) => setUserCount(res.data.count));
+  }, []);
+
+  const itemsPerPage = 10;
+  const numberOfPages = Math.ceil(userCount / itemsPerPage);
+
+  const pages = [];
+  for (let i = 1; i <= numberOfPages; i++) {
+    pages.push(i);
+  }
+
   const {
     data: users,
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["users", axiosSecure],
+    queryKey: ["users", axiosSecure, currentPage, itemsPerPage],
     queryFn: async () => {
       const { data } = await axiosSecure(
-        `/users`
+        `/users?page=${currentPage - 1}&size=${itemsPerPage}`
       );
       return data;
     },
@@ -64,6 +80,7 @@ const ManageUsers = () => {
           <table className="table border border-[#1E88E5] rounded">
             <thead>
               <tr className="text-center text-base text-white bg-[#1E88E5]">
+                <th>Serial</th>
                 <th>User Name</th>
                 <th>User Email</th>
                 <th>User Role</th>
@@ -71,11 +88,12 @@ const ManageUsers = () => {
               </tr>
             </thead>
             <tbody>
-              {users?.map((user) => (
+              {users?.map((user, index) => (
                 <tr
                   key={user?._id}
                   className="text-center text-[#757575] font-medium"
                 >
+                  <td>{index + 1}</td>
                   <td>{user?.name}</td>
                   <td>{user?.email}</td>
                   <td>
@@ -95,21 +113,21 @@ const ManageUsers = () => {
               ))}
             </tbody>
           </table>
-            {/* <div className="w-fit mx-auto mt-6">
-              {pages?.map((page) => (
-                <button
-                  onClick={() => setCurrentPage(page)}
-                  className={
-                    currentPage === page
-                      ? "btn btn-xs btn-circle mr-2 bg-[#1E88E5] text-white"
-                      : "btn btn-xs btn-circle mr-2 text-[#1E88E5]"
-                  }
-                  key={page}
-                >
-                  {page}
-                </button>
-              ))}
-            </div> */}
+          <div className="w-fit mx-auto mt-6">
+            {pages?.map((page) => (
+              <button
+                onClick={() => setCurrentPage(page)}
+                className={
+                  currentPage === page
+                    ? "btn btn-xs btn-circle mr-2 bg-[#1E88E5] text-white"
+                    : "btn btn-xs btn-circle mr-2 text-[#1E88E5]"
+                }
+                key={page}
+              >
+                {page}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </>
