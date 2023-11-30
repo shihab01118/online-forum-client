@@ -76,8 +76,8 @@ const ManageUsers = () => {
           heading="User Management"
           subheading="Effortlessly Handle User Accounts and Permissions"
         />
-        <div className="overflow-x-auto mt-6">
-          <table className="table border border-[#1E88E5] rounded">
+        <div className="overflow-x-auto mt-6 border border-[#1E88E5]">
+          <table className="table">
             <thead>
               <tr className="text-center text-base text-white bg-[#1E88E5]">
                 <th>Serial</th>
@@ -113,21 +113,26 @@ const ManageUsers = () => {
               ))}
             </tbody>
           </table>
-          <div className="w-fit mx-auto mt-6">
-            {pages?.map((page) => (
-              <button
-                onClick={() => setCurrentPage(page)}
-                className={
-                  currentPage === page
-                    ? "btn btn-xs btn-circle mr-2 bg-[#1E88E5] text-white"
-                    : "btn btn-xs btn-circle mr-2 text-[#1E88E5]"
-                }
-                key={page}
-              >
-                {page}
-              </button>
-            ))}
-          </div>
+          {userCount > 10 && (
+            <div className="mt-4 w-fit mx-auto flex gap-4">
+              <div>
+                {pages?.map((page) => (
+                  <button
+                    onClick={() => setCurrentPage(page)}
+                    className={
+                      currentPage === page
+                        ? "btn btn-xs btn-circle mr-2 bg-[#1E88E5] text-white"
+                        : "btn btn-xs btn-circle mr-2 text-[#1E88E5]"
+                    }
+                    key={page}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
+              {/* <p className="tex-xs text-[#757575]">showing 1-10 of {userCount}</p> */}
+            </div>
+          )}
         </div>
       </div>
     </>

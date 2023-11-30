@@ -44,7 +44,6 @@ const PostDetails = () => {
     };
 
     const { data } = await axiosSecure.post("/comments", commentData);
-    console.log(data);
     if (data._id) {
       form.reset();
       toast.success("Comment Added!");
@@ -55,7 +54,6 @@ const PostDetails = () => {
     const res = await axiosSecure.put(`/posts/${_id}/like`, {
       action: "like",
     });
-    console.log(res);
     if (res.status === 200) {
       refetch();
       toast.success("You liked this post");
@@ -66,7 +64,6 @@ const PostDetails = () => {
     const res = await axiosSecure.put(`/posts/${_id}/like`, {
       action: "dislike",
     });
-    console.log(res);
     if (res.status === 200) {
       refetch();
       toast.error("You disliked this post");

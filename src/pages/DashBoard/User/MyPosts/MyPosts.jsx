@@ -10,9 +10,24 @@ import axiosSecure from "../../../../api";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 const MyPosts = () => {
   const { user } = useAuth();
+  const [postCount, setPostCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    axiosSecure("/posts/count").then((res) => setPostCount(res.data.count));
+  }, []);
+
+  const itemsPerPage = 10;
+  const numberOfPages = Math.ceil(postCount / itemsPerPage);
+
+  const pages = [];
+  for (let i = 1; i <= numberOfPages; i++) {
+    pages.push(i);
+  }
 
   const {
     data: posts,
@@ -21,7 +36,9 @@ const MyPosts = () => {
   } = useQuery({
     queryKey: ["posts", axiosSecure, user?.email],
     queryFn: async () => {
-      const { data } = await axiosSecure(`/posts/${user?.email}`);
+      const { data } = await axiosSecure(
+        `/posts/${user?.email}?page=${currentPage - 1}&size=${itemsPerPage}`
+      );
       return data;
     },
   });
@@ -66,8 +83,8 @@ const MyPosts = () => {
             heading="Your Contributions"
             subheading="Explore Your Shared Content"
           />
-          <div className="overflow-x-auto mt-6">
-            <table className="table border border-[#1E88E5] rounded">
+          <div className="overflow-x-auto mt-6  border border-[#1E88E5]">
+            <table className="table">
               <thead>
                 <tr className="text-center text-base text-white bg-[#1E88E5]">
                   <th>Post Title</th>
@@ -82,7 +99,7 @@ const MyPosts = () => {
                     key={post?.title}
                     className="text-center  text-[#757575] font-medium"
                   >
-                    <th>{post?.title}</th>
+                    <td>{post?.title}</td>
                     <td>{post?.upVote}</td>
                     <td>
                       <Link to={`comments/${post?.title}`}>
@@ -103,6 +120,26 @@ const MyPosts = () => {
               </tbody>
             </table>
           </div>
+          {postCount > 10 && (
+            <div className="mt-4 w-fit mx-auto flex gap-4">
+              <div>
+                {pages?.map((page) => (
+                  <button
+                    onClick={() => setCurrentPage(page)}
+                    className={
+                      currentPage === page
+                        ? "btn btn-xs btn-circle mr-2 bg-[#1E88E5] text-white"
+                        : "btn btn-xs btn-circle mr-2 text-[#1E88E5]"
+                    }
+                    key={page}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
+              {/* <p className="tex-xs text-[#757575]">showing 1-10 of {userCount}</p> */}
+            </div>
+          )}
         </div>
       ) : (
         <div className="h-[calc(100vh-48px)] flex justify-center items-center">

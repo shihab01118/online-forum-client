@@ -32,7 +32,6 @@ const AddPost = () => {
       return data;
     },
   });
-  console.log(tags);
 
   if (isLoading) return <Loader />;
 

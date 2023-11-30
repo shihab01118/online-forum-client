@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import PropTypes from "prop-types";
 import { createContext, useEffect, useState } from "react";
 import {
   GoogleAuthProvider,
@@ -57,7 +57,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log(currentUser);
+      // console.log(currentUser);
       setLoading(false);
     });
     return () => {
@@ -80,6 +80,10 @@ const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.node,
 };
 
 export default AuthProvider;

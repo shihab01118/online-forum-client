@@ -5,7 +5,7 @@ const RecentPost = ({ post }) => {
   const postedTime = formatDistance(new Date(post?.createdAt), new Date(), {
     addSuffix: true,
   });
-  console.log(postedTime);
+  
   return (
     <div className="p-2 shadow-md border">
       <h3 className="font-medium">{post?.title}</h3>

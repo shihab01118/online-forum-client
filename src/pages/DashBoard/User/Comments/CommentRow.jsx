@@ -41,9 +41,8 @@ const CommentRow = ({ comment }) => {
       feedback: feedback,
       commentId: comment?._id,
     };
-    // console.log(reportedComment);
+    
     const { data } = await axiosSecure.post("/reportedComments", reportedComment);
-    console.log(data);
     if (data?._id) {
       toast.success("Comment Reported!");
       setFeedback("");
@@ -52,7 +51,7 @@ const CommentRow = ({ comment }) => {
 
   return (
     <tr className="text-center  text-[#757575] font-medium">
-      <th>{comment?.commenterEmail}</th>
+      <td>{comment?.commenterEmail}</td>
       <td>
         {comment?.comment.slice(0, 20)}...{" "}
         <button onClick={handleOpen} className="btn btn-xs">

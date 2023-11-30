@@ -39,13 +39,13 @@ const Sidebar = () => {
         md:translate-x-0  transition duration-200 ease-in-out`}
       >
         <div>
-          <div>
+          <div className="mb-3">
             <div className="w-full hidden md:flex py-2 rounded-lg justify-center items-center mx-auto">
               <Logo />
             </div>
           </div>
-          <hr className="my-3" />
-          <div className="flex flex-col justify-between flex-1">
+          {/* <hr className="my-3" /> */}
+          <div className="flex flex-col justify-between flex-1 border-t pt-3 border-[#1E88E5]">
             <nav>
               {isAdmin ? (
                 <>
@@ -93,8 +93,8 @@ const Sidebar = () => {
           </div>
         </div>
 
-        <div>
-          <hr className="mb-3" />
+        <div className="border-t pt-3 border-[#1E88E5]">
+          {/* <hr className="mb-3" /> */}
 
           <MenuItem icon={FaHome} label="Home" address="/" />
           <button

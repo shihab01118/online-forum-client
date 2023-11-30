@@ -22,7 +22,6 @@ const CheckoutForm = () => {
   useEffect(() => {
     axiosSecure.post("/create-payment-intent", { money: 20 }).then((res) => {
       const data = res.data;
-      console.log(res.data);
       setClientSecret(data.clientSecret);
     });
   }, []);
@@ -81,7 +80,7 @@ const CheckoutForm = () => {
           `/users/update_badge/${user?.email}`,
           goldUser
         );
-        console.log(data);
+        // console.log(data);
         if (data.transactionId) {
           refetch();
           navigate("/dashboard/userProfile");

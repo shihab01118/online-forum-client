@@ -13,7 +13,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_PK);
 
 const Membership = () => {
   const currentUser = useGetUser();
-  console.log(currentUser);
+  
   return (
     <>
       <Helmet>

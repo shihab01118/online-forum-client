@@ -60,7 +60,7 @@ const UserProfile = () => {
               </div>
             </div>
           </div>
-          {posts.length > 0 && (
+          {posts?.length > 0 && (
             <div className="px-6 pb-6">
               <h3 className="text-xl font-bold mb-4">Recent Posts</h3>
               <div className="flex flex-col gap-2">

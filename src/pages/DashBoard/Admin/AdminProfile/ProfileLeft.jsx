@@ -15,7 +15,6 @@ const ProfileLeft = () => {
     const form = e.target;
     const newTag = { tag };
     const { data } = await axiosSecure.post("/tags", newTag);
-    console.log(data);
     if (data._id) {
       form.reset();
       toast.success("New Tag Added!");
