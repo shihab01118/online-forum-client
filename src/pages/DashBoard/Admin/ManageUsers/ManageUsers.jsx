@@ -37,6 +37,13 @@ const ManageUsers = () => {
     },
   });
 
+  const firstIndex = currentPage * 10 + 1;
+
+  let lastIndex = currentPage * 10;
+  if (users?.length < 10) {
+    lastIndex = (currentPage - 1) * 10 + users?.length;
+  }
+
   if (isLoading) return <Loader />;
 
   const handleMakeAdmin = (user) => {
@@ -114,26 +121,28 @@ const ManageUsers = () => {
             </tbody>
           </table>
         </div>
-          {userCount > 10 && (
-            <div className="mt-4 w-fit mx-auto flex gap-4">
-              <div>
-                {pages?.map((page) => (
-                  <button
-                    onClick={() => setCurrentPage(page)}
-                    className={
-                      currentPage === page
-                        ? "btn btn-xs btn-circle mr-2 bg-[#1E88E5] text-white"
-                        : "btn btn-xs btn-circle mr-2 text-[#1E88E5]"
-                    }
-                    key={page}
-                  >
-                    {page}
-                  </button>
-                ))}
-              </div>
-              {/* <p className="tex-xs text-[#757575]">showing 1-10 of {userCount}</p> */}
+        {userCount > 10 && (
+          <div className="mt-4 w-fit mx-auto flex gap-4">
+            <div>
+              {pages?.map((page) => (
+                <button
+                  onClick={() => setCurrentPage(page)}
+                  className={
+                    currentPage === page
+                      ? "btn btn-xs btn-circle mr-2 bg-[#1E88E5] text-white"
+                      : "btn btn-xs btn-circle mr-2 text-[#1E88E5]"
+                  }
+                  key={page}
+                >
+                  {page}
+                </button>
+              ))}
             </div>
-          )}
+            <p className="tex-xs text-[#757575]">
+              showing {firstIndex - 10}-{lastIndex} of {userCount}
+            </p>
+          </div>
+        )}
       </div>
     </>
   );

@@ -36,6 +36,13 @@ const Comments = () => {
     },
   });
 
+  const firstIndex = currentPage * 10 + 1;
+
+  let lastIndex = currentPage * 10;
+  if (comments?.length < 10) {
+    lastIndex = (currentPage - 1) * 10 + comments?.length;
+  }
+
   if (isLoading) return <Loader />;
 
   return (
@@ -84,7 +91,9 @@ const Comments = () => {
                     </button>
                   ))}
                 </div>
-                {/* <p className="tex-xs text-[#757575]">showing 1-10 of {userCount}</p> */}
+                <p className="tex-xs text-[#757575]">
+                  showing {firstIndex - 10}-{lastIndex} of {commentCount}
+                </p>
               </div>
             )}
           </div>

@@ -43,6 +43,13 @@ const MyPosts = () => {
     },
   });
 
+  const firstIndex = currentPage * 10 + 1;
+
+  let lastIndex = currentPage * 10;
+  if (posts?.length < 10) {
+    lastIndex = (currentPage - 1) * 10 + posts?.length;
+  }
+
   if (isLoading) return <Loader />;
 
   const handleDelete = (post) => {
@@ -88,8 +95,9 @@ const MyPosts = () => {
               <thead>
                 <tr className="text-center text-base text-white bg-[#1E88E5]">
                   <th>Post Title</th>
-                  <th>Number of Votes</th>
-                  <th>Check Comments</th>
+                  <th>Likes</th>
+                  <th>Dislikes</th>
+                  <th>Comments</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -101,6 +109,7 @@ const MyPosts = () => {
                   >
                     <td>{post?.title}</td>
                     <td>{post?.upVote}</td>
+                    <td>{post?.downVote}</td>
                     <td>
                       <Link to={`comments/${post?.title}`}>
                         <button className="btn btn-sm">Comments</button>
@@ -137,7 +146,9 @@ const MyPosts = () => {
                   </button>
                 ))}
               </div>
-              {/* <p className="tex-xs text-[#757575]">showing 1-10 of {userCount}</p> */}
+              <p className="tex-xs text-[#757575]">
+                showing {firstIndex - 10}-{lastIndex} of {postCount}
+              </p>
             </div>
           )}
         </div>
