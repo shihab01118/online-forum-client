@@ -37,3 +37,18 @@ Visit [DiscussHub](https://online-forum-f9255.web.app) to start exploring and en
 - **Search Functionality**: Easily find relevant posts and discussions.
 - **Notification System**: Stay updated with notifications for new announcements.
 - **Moderation Tools**: Admin tools for content moderation and user management.
+
+## Admin Activities Page
+
+### Description
+The Admin Activities Page serves as a central hub for administrators to oversee reported comments, manage user activities, and take necessary actions against content that violates community guidelines or terms of service.
+
+### Features
+- **View Reported Comments:**
+  - Admins can view reported comments along with details like commenter email, commented post title, user email, and feedback provided by users.
+- **Delete Comments:**
+  - Admins have the authority to delete reported comments that violate community guidelines or terms of service directly from the Admin Activities Page.
+- **Card Representation:**
+  - Reported comments are displayed as cards, ensuring a clear and organized view for efficient assessment and action.
+- **Enhanced User Reporting:**
+  - Users can report comments, sending pertinent details to the Admin Activities Page for review and action by admins.

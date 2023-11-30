@@ -17,7 +17,7 @@ const Membership = () => {
   return (
     <>
       <Helmet>
-        <title>DiscussHub | Membership</title>
+        <title>DiscussHub - Membership</title>
       </Helmet>
       <div className="pt-[78px] h-[calc(100vh-78px)] flex items-center justify-center">
         {currentUser?.badge === "gold" ? (

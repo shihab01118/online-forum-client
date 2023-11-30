@@ -113,6 +113,7 @@ const ManageUsers = () => {
               ))}
             </tbody>
           </table>
+        </div>
           {userCount > 10 && (
             <div className="mt-4 w-fit mx-auto flex gap-4">
               <div>
@@ -133,7 +134,6 @@ const ManageUsers = () => {
               {/* <p className="tex-xs text-[#757575]">showing 1-10 of {userCount}</p> */}
             </div>
           )}
-        </div>
       </div>
     </>
   );
