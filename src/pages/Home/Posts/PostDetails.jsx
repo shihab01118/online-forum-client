@@ -73,7 +73,7 @@ const PostDetails = () => {
   return (
     <div className="py-[78px] min:h-[calc(100vh-78px)]">
       <Helmet>
-        <title>{`${title}`}</title>
+        <title>Post - {title}</title>
       </Helmet>
       <Container>
       <Card

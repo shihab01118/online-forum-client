@@ -13,7 +13,7 @@ const Post = ({ post }) => {
   const { img, title, tag, upVote, downVote, createdAt, _id } =
     post || {};
 
-  const totalTime = formatDistance(new Date(createdAt), new Date(), {
+  const timeCount = formatDistance(new Date(createdAt), new Date(), {
     addSuffix: true,
   });
 
@@ -55,7 +55,7 @@ const Post = ({ post }) => {
             </div>
           </div>
           <p className="text-xs text-[#757575] font-medium ml-auto">
-            {totalTime}
+            {timeCount}
           </p>
         </div>
       </div>

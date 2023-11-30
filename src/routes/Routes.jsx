@@ -28,7 +28,8 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        loader: () => fetch("http://localhost:5000/posts/count"),
+        loader: () =>
+          fetch("https://online-forum-serverr.vercel.app/posts/count"),
       },
       {
         path: "/posts/:id",
